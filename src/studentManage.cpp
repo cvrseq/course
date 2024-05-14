@@ -39,7 +39,7 @@ void StudentManager::encrypt (const std::string filenameIn, const std::string fi
     std::ofstream file("key.txt", std::ios::trunc);
     file << key;
     file.close();
-    std::string commandAES = "openssl aes-128-cbc -salt -in " + filenameIn + " -out " + filenameOut + " -pass pass:" + key;
+    std::string commandAES = "openssl aes-256-cbc -salt -in " + filenameIn + " -out " + filenameOut + " -pass pass:" + key;
     std::system(commandAES.c_str());
     if (std::remove(filenameIn.c_str()) != 0) {
         std::cerr << "CANNOT DELETE >>> " + filenameIn << std::endl;
@@ -61,7 +61,7 @@ void StudentManager::decrypt (std::string filenameIn, std::string filenameOut) {
     if (std::remove("key.txt.enc") != 0) {
         std::cerr << "CANNOT DELETE >>> key.txt.enc" << std::endl;
     }
-    std::string commandAES = "openssl aes-128-cbc -d -in " + filenameIn + " -out " + filenameOut + " -pass pass:" + key;
+    std::string commandAES = "openssl aes-256-cbc -d -in " + filenameIn + " -out " + filenameOut + " -pass pass:" + key;
     std::system(commandAES.c_str());
     if (std::remove(filenameIn.c_str()) != 0) {
         std::cerr << "CANNOT DELETE >>> " + filenameIn << std::endl;
